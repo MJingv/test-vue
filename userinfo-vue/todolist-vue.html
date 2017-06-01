@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>userinfo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style>
+
+    </style>
+    <link rel="stylesheet" href="lib/bootstrap.min.css">
+    <script src="lib/jquery-1.7.2.js"></script>
+    <script src="lib/bootstrap.js"></script>
+
+    <script src="vue.js"></script>
+    <script>
+    window.onload=function () {
+        new Vue({
+            el:'#box',
+            data(){
+                return{
+                    myDate:[],
+                    username:'',
+                    age:'',
+                    nowIndex:-100
+
+                }
+            },
+            methods:{
+                add(){
+                    this.myDate.push({
+                        name:this.username,
+                        age:this.age,
+                    });
+                    this.username='';
+                    this.age='';
+                },
+                deleteMsg(n){
+                    if (n==-1) {
+                        this.myDate=[]
+                    }else {
+                        this.myDate.splice(n,1); 
+                    }
+                    
+                }
+            }
+
+        })
+    }
+    </script>
+</head>
+<body>
+    <div class="container" id="box">
+        <form role="form" >
+        <h3 class="text-center">Please Input Your Userinfo</h3>
+            <div class="form-group">
+                <label for="username">用户名:</label>
+                <input type="text" id="username" class="form-control" placeholder="输入用户名" v-model="username">
+            </div>
+            <div class="form-group">
+                <label for="age">年　龄:</label>
+                <input type="text" id="age" class="form-control" placeholder="输入年龄" v-model="age">
+            </div>
+            <div class="form-group text-center" >
+                <input type="button" value="添加" class="btn btn-success" @click="add()">
+                <input type="reset" value="重置" class="btn btn-primary">
+            </div>
+        </form>
+        <hr>
+        <table class="table table-bordered table-hover">
+            <caption class="h2 ">用户信息表</caption>
+            <br>
+            <tr class="text-danger">
+                <th class="text-center">序号</th>
+                <th class="text-center">名字</th>
+                <th class="text-center">年龄</th>
+                <th class="text-center">操作</th>
+            </tr>
+            <tr class="text-center" v-for="(index,item) in myDate">
+                <td>{{index+1}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.age}}</td>
+                <td>
+                    <button class="btn btn-warning btn-sm"
+                    data-toggle="modal" data-target="#layer" @click="nowIndex=index">删除</button>
+                </td>
+            </tr>
+         
+            <tr v-show="myDate.length!=0">
+                <td colspan="4" class="text-right">
+                    <button class="btn btn-danger btn-sm "@click="deleteMsg('-1')">删除全部</button>
+                </td>
+            </tr>
+            <tr v-show="myDate.length==0">
+                <td colspan="4" class="text-center text-muted">
+                    <p>暂无数据....</p>
+                </td>
+            </tr>
+        </table>
+        <!--弹出框 -->
+        <div role="dialog" class="modal fade " id="layer">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title text-center" >
+                            😫确定删除吗😫
+                        </h4>
+                    </div>
+                    <div class="modal-body text-right" >
+                        <button  class="btn btn-success" data-dismiss="modal">取消❌</button>
+                        <button class="btn btn-danger " data-dismiss="modal"
+                         @click="deleteMsg(nowIndex)">确认✅</button>
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
