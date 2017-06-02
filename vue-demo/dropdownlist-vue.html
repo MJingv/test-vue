@@ -76,7 +76,7 @@
         <input type="text" v-model="t1"  @keyup="get($event)" @keydown.down.prevent="changeDown()"
         @keydown.up.prevent="changeUp()"
         placeholder="输入搜索内容🔍">
-        <span>回车搜索</span>
+        <span>回车进入百度搜索</span>
         <ul>
             <li v-for="value in myData" :class="{sel:$index==now}">
                 {{$index+value}}
